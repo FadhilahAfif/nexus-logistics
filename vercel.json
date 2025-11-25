@@ -2,29 +2,34 @@
     "version": 2,
     "framework": null,
     "functions": {
-        "api/*.php": { "runtime": "vercel-php@0.6.2" }
+        "api/*.php": { "runtime": "vercel-php@0.7.0" }
     },
     "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/api/index.php"
-        }
+        { "src": "/build/(.*)", "dest": "/public/build/$1" },
+        { "src": "/css/(.*)", "dest": "/public/css/$1" },
+        { "src": "/js/(.*)", "dest": "/public/js/$1" },
+        { "src": "/assets/(.*)", "dest": "/public/assets/$1" },
+        { "src": "/favicon.ico", "dest": "/public/favicon.ico" },
+        { "src": "/robots.txt", "dest": "/public/robots.txt" },
+        { "src": "/(.*)", "dest": "/api/index.php" }
     ],
     "env": {
         "APP_ENV": "production",
-        "APP_DEBUG": "true",
+        "APP_DEBUG": "false",
         "APP_URL": "https://${VERCEL_URL}",
-        
-        "APP_CONFIG_CACHE": "/tmp/config_v2.php",
-        "APP_EVENTS_CACHE": "/tmp/events_v2.php",
-        "APP_PACKAGES_CACHE": "/tmp/packages_v2.php",
-        "APP_ROUTES_CACHE": "/tmp/routes_v2.php", 
-        "APP_SERVICES_CACHE": "/tmp/services_v2.php",
+        "DB_CONNECTION": "pgsql",
+        "APP_CONFIG_CACHE": "/tmp/config.php",
+        "APP_EVENTS_CACHE": "/tmp/events.php",
+        "APP_PACKAGES_CACHE": "/tmp/packages.php",
+        "APP_ROUTES_CACHE": "/tmp/routes.php",
+        "APP_SERVICES_CACHE": "/tmp/services.php",
         "VIEW_COMPILED_PATH": "/tmp",
-        "outputDirectory": "public",
-        
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie"
-    }
+    },
+    "exclude": [
+        "node_modules/**",
+        "tests/**"
+    ]
 }
