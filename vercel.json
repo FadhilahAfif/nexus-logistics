@@ -27,9 +27,5 @@
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie"
-    },
-    "exclude": [
-        "node_modules/**",
-        "tests/**"
-    ]
+    }
 }
