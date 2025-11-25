@@ -21,6 +21,7 @@
         "APP_ROUTES_CACHE": "/tmp/routes_v2.php", 
         "APP_SERVICES_CACHE": "/tmp/services_v2.php",
         "VIEW_COMPILED_PATH": "/tmp",
+        "outputDirectory": "public",
         
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
