@@ -9,6 +9,8 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class ShipmentStatsOverview extends StatsOverviewWidget
 {
+    protected static ?int $sort = 2;
+
     protected ?string $pollingInterval = '60s';
 
     protected function getStats(): array

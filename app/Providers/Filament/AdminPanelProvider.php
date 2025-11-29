@@ -5,6 +5,8 @@ namespace App\Providers\Filament;
 use App\Filament\Widgets\RecentShipments;
 use App\Filament\Widgets\ShipmentStatsOverview;
 use App\Filament\Widgets\ShipmentStatusChart;
+use App\Filament\Widgets\ShipmentStatusDistributionChart;
+use Filament\Navigation\MenuItem;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -49,7 +51,14 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 ShipmentStatsOverview::class,
                 ShipmentStatusChart::class,
+                ShipmentStatusDistributionChart::class,
                 RecentShipments::class,
+            ])
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Kembali ke Website')
+                    ->url('/')
+                    ->icon('heroicon-o-home'),
             ])
             ->middleware([
                 EncryptCookies::class,

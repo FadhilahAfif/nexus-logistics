@@ -11,6 +11,8 @@ class RecentShipments extends BaseWidget
 {
     protected int|string|array $columnSpan = 'full';
 
+    protected static ?int $sort = 5;
+
     protected static ?string $heading = 'Aktivitas Terbaru';
 
     protected ?string $pollingInterval = '30s';

@@ -8,6 +8,10 @@ use Illuminate\Support\Carbon;
 
 class ShipmentStatusChart extends ChartWidget
 {
+    protected static ?int $sort = 3;
+
+    protected int | string | array $columnSpan = 1;
+
     protected ?string $heading = 'Trend Pengiriman 7 Hari';
 
     protected ?string $pollingInterval = '60s';
