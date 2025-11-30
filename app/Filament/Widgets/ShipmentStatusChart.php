@@ -24,7 +24,7 @@ class ShipmentStatusChart extends ChartWidget
             ->all();
 
         $baseQuery = Shipment::query()
-            ->selectRaw('DATE(created_at) as date, COUNT(*) as total')
+            ->selectRaw("TO_CHAR(created_at, 'YYYY-MM-DD') as date, COUNT(*) as total")
             ->where('created_at', '>=', Carbon::today()->subDays(6))
             ->groupBy('date')
             ->pluck('total', 'date');
@@ -35,7 +35,7 @@ class ShipmentStatusChart extends ChartWidget
             ->all();
 
         $deliveredCounts = Shipment::query()
-            ->selectRaw('DATE(updated_at) as date, COUNT(*) as total')
+            ->selectRaw("TO_CHAR(updated_at, 'YYYY-MM-DD') as date, COUNT(*) as total")
             ->where('updated_at', '>=', Carbon::today()->subDays(6))
             ->where('status', 'delivered')
             ->groupBy('date')
