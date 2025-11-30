@@ -32,7 +32,7 @@ class LogisticsDemoSeeder extends Seeder
 
                     $shipment->updates()->create([
                         'location' => $city,
-                        'description' => fake()->optional()->sentence(),
+                        'description' => 'Paket telah sampai di ' . $city,
                         'status' => $status,
                         'happened_at' => (clone $start)->addHours($index * rand(3, 8)),
                     ]);
