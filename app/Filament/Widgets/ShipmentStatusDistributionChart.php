@@ -21,6 +21,14 @@ class ShipmentStatusDistributionChart extends ChartWidget
             ->pluck('total', 'status')
             ->toArray();
 
+        // Pastikan data tidak kosong untuk mencegah error JS di chart
+        if (empty($data)) {
+            return [
+                'datasets' => [],
+                'labels' => [],
+            ];
+        }
+
         return [
             'datasets' => [
                 [
