@@ -11,6 +11,8 @@ class ShipmentStatsOverview extends StatsOverviewWidget
 {
     protected static ?int $sort = 2;
 
+    protected static bool $isLazy = true;
+
     protected ?string $pollingInterval = '60s';
 
     protected function getStats(): array

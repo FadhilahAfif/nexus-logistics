@@ -13,6 +13,8 @@ class RecentShipments extends BaseWidget
 
     protected static ?int $sort = 5;
 
+    protected static bool $isLazy = true;
+
     protected static ?string $heading = 'Aktivitas Terbaru';
 
     protected ?string $pollingInterval = '30s';
