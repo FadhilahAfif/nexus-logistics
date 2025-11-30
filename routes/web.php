@@ -14,6 +14,11 @@ Route::get('/track', [TrackingController::class, 'track'])
 
 // --- ROUTE KHUSUS MIGRASI (HANYA SEMENTARA) ---
 Route::get('/setup-database', function () {
+    // Paksa tampilkan error jika ada
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
     try {
         // 1. Jalankan Migrasi (Force karena production)
         Artisan::call('migrate', ["--force" => true]);
@@ -28,7 +33,7 @@ Route::get('/setup-database', function () {
         $output .= "\n" . Artisan::output();
 
         return "<pre>BERHASIL! Database sudah dibuat dan diisi data awal.\n\nLog:\n$output</pre>";
-    } catch (\Exception $e) {
-        return "<pre>GAGAL:\n" . $e->getMessage() . "</pre>";
+    } catch (\Throwable $e) {
+        return "<pre>GAGAL:\n" . $e->getMessage() . "\n\nTrace:\n" . $e->getTraceAsString() . "</pre>";
     }
 });
