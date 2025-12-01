@@ -55,28 +55,35 @@
                 x-on:dragover.prevent="isDragging = true"
                 x-on:dragleave.prevent="isDragging = false"
                 x-on:drop.prevent="isDragging = false; handleFile({target: {files: $event.dataTransfer.files}})"
-                :class="{ 'border-primary-500 ring-2 ring-primary-500 ring-opacity-50 bg-primary-50 dark:bg-primary-900/10': isDragging, 'border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800': !isDragging }"
-                class="relative flex justify-center rounded-lg border border-dashed px-6 py-10 transition-all duration-300"
+                :class="{ 'border-blue-400 bg-blue-100 dark:bg-blue-900/20': isDragging, 'border-blue-200 bg-blue-50 dark:border-gray-600 dark:bg-gray-800': !isDragging }"
+                class="relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed px-6 py-8 transition-all duration-300 text-center"
             >
-                <div class="text-center">
-                    <svg class="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clip-rule="evenodd" />
+                <div class="mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-16 h-16 text-blue-600 dark:text-blue-500">
+                        <path d="M19.5 21a3 3 0 0 0 3-3v-4.5a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3V18a3 3 0 0 0 3 3h15ZM1.5 10.146V6a3 3 0 0 1 3-3h5.379a2.25 2.25 0 0 1 1.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 0 1 3 3v1.146A4.483 4.483 0 0 0 19.5 9h-15a4.483 4.483 0 0 0-3 1.146Z" />
                     </svg>
-                    <div class="mt-4 flex text-sm leading-6 text-gray-600 dark:text-gray-400 justify-center">
-                        <label class="relative cursor-pointer rounded-md font-semibold text-primary-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-primary-600 focus-within:ring-offset-2 hover:text-primary-500">
-                            <span>Upload a file</span>
-                            <input 
-                                x-ref="fileInput" 
-                                type="file" 
-                                class="sr-only" 
-                                accept="image/*" 
-                                @change="handleFile"
-                            >
-                        </label>
-                        <p class="pl-1">or drag and drop</p>
-                    </div>
-                    <p class="text-xs leading-5 text-gray-600 dark:text-gray-400">PNG, JPG up to 2MB</p>
                 </div>
+
+                <p class="text-gray-700 dark:text-gray-300 font-medium mb-2">Click the button below to upload your files.</p>
+                
+                <div class="flex items-center w-full max-w-[200px] my-4">
+                    <div class="h-px bg-gray-300 dark:bg-gray-600 flex-1"></div>
+                    <span class="px-3 text-gray-400 text-sm font-medium">OR</span>
+                    <div class="h-px bg-gray-300 dark:bg-gray-600 flex-1"></div>
+                </div>
+                
+                <label class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-sm transition-colors">
+                    Choose File
+                    <input 
+                        x-ref="fileInput" 
+                        type="file" 
+                        class="hidden" 
+                        accept="image/*" 
+                        @change="handleFile"
+                    >
+                </label>
+                
+                <p class="mt-4 text-xs text-gray-400 dark:text-gray-500">PNG, JPG up to 2MB</p>
             </div>
         </template>
     </div>
