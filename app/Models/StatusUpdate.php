@@ -15,6 +15,7 @@ class StatusUpdate extends Model
         'shipment_id',
         'location',
         'description',
+        'proof_of_delivery',
         'status',
         'happened_at',
     ];

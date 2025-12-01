@@ -146,59 +146,7 @@
             @endforeach
         </section>
 
-        <section class="max-w-6xl mx-auto px-6 mt-20 grid gap-8 lg:grid-cols-2">
-            <div class="bg-white/5 border border-white/5 rounded-3xl p-8">
-                <p class="text-sm uppercase tracking-[0.3em] text-slate-400">{{ __('home.process.tag') }}</p>
-                <h3 class="text-3xl font-bold mt-4 mb-6">{{ __('home.process.title') }}</h3>
-                <ol class="space-y-6">
-                    @foreach(trans('home.process.steps') as $stepIndex => $step)
-                        @php
-                            $colors = ['blue', 'violet', 'emerald'];
-                            $color = $colors[$stepIndex] ?? 'indigo';
-                        @endphp
-                        <li class="flex gap-4 items-start">
-                            <span class="w-10 h-10 rounded-full bg-{{ $color }}-500/20 border border-{{ $color }}-500/40 flex items-center justify-center text-lg font-bold">{{ $stepIndex + 1 }}</span>
-                            <div>
-                                <h4 class="font-semibold text-lg">{{ $step['title'] }}</h4>
-                                <p class="text-sm text-slate-400">{{ $step['body'] }}</p>
-                            </div>
-                        </li>
-                    @endforeach
-                </ol>
-            </div>
 
-            <div class="bg-white/5 border border-white/5 rounded-3xl p-8">
-                <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-2xl font-bold">{{ __('home.activity.title') }}</h3>
-                    <span class="text-xs uppercase tracking-[0.3em] text-slate-500">{{ __('home.activity.sample_label') }}</span>
-                </div>
-                <div class="space-y-4">
-                    @forelse($latestShipments as $shipment)
-                        <div class="bg-white/5 border border-white/5 rounded-2xl p-4 flex items-center justify-between">
-                            <div>
-                                <p class="text-xs text-slate-400">{{ $shipment->updated_at?->format('d M Y, H:i') }}</p>
-                                <p class="font-semibold">{{ $shipment->tracking_number }}</p>
-                                <p class="text-sm text-slate-400">{{ $shipment->sender_name }} ➝ {{ $shipment->receiver_name }}</p>
-                            </div>
-                            <span class="px-3 py-1 rounded-full text-xs font-bold {{ match($shipment->status) {
-                                'pending' => 'bg-slate-700 text-slate-200',
-                                'picked_up' => 'bg-blue-600/30 text-blue-200 border border-blue-500/40',
-                                'in_transit' => 'bg-amber-500/20 text-amber-200 border border-amber-500/40',
-                                'delivered' => 'bg-emerald-500/20 text-emerald-200 border border-emerald-500/40',
-                                'returned' => 'bg-rose-500/20 text-rose-200 border border-rose-500/40',
-                                default => 'bg-slate-700 text-slate-200',
-                            } }}">
-                                {{ $shipment->status_label }}
-                            </span>
-                        </div>
-                    @empty
-                        <div class="text-center text-slate-500 py-6">
-                            {{ __('home.activity.empty') }}
-                        </div>
-                    @endforelse
-                </div>
-            </div>
-        </section>
 
         <footer class="max-w-6xl mx-auto px-6 mt-24 pb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-t border-white/5 pt-8 text-sm text-slate-500">
             <div>

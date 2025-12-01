@@ -9,11 +9,14 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Group;
@@ -52,6 +55,11 @@ class ShipmentResource extends Resource
                                     ->options(Shipment::statusOptions())
                                     ->required()
                                     ->default('pending'),
+                                DatePicker::make('estimated_delivery')
+                                    ->label('Estimasi Tiba')
+                                    ->native(false)
+                                    ->displayFormat('d M Y')
+                                    ->nullable(),
                                 TextInput::make('weight_kg')
                                     ->label('Berat (kg)')
                                     ->numeric()
@@ -110,7 +118,8 @@ class ShipmentResource extends Resource
                                 Select::make('status')
                                     ->label('Status')
                                     ->options(Shipment::statusOptions())
-                                    ->required(),
+                                    ->required()
+                                    ->live(),
                                 TextInput::make('location')
                                     ->label('Lokasi')
                                     ->required()
@@ -119,6 +128,14 @@ class ShipmentResource extends Resource
                                     ->label('Catatan Kurir')
                                     ->rows(2)
                                     ->columnSpanFull(),
+                                FileUpload::make('proof_of_delivery')
+                                    ->label('Bukti Foto (POD)')
+                                    ->image()
+                                    ->disk('s3')
+                                    ->directory('pod-images')
+                                    ->columnSpanFull()
+                                    ->nullable()
+                                    ->visible(fn ($get) => $get('status') === 'delivered'),
                                 DateTimePicker::make('happened_at')
                                     ->label('Waktu Terjadi')
                                     ->seconds(false)

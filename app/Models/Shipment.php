@@ -37,6 +37,7 @@ class Shipment extends Model
         'receiver_phone',
         'receiver_address',
         'status',
+        'estimated_delivery',
         'weight_kg',
         'price',
     ];
@@ -44,6 +45,7 @@ class Shipment extends Model
     protected $casts = [
         'weight_kg' => 'decimal:2',
         'price' => 'decimal:2',
+        'estimated_delivery' => 'date',
     ];
 
     // Relasi: Satu Paket punya BANYAK update status

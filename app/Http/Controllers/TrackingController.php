@@ -16,11 +16,7 @@ class TrackingController extends Controller
             'pending' => Shipment::where('status', 'pending')->count(),
         ];
 
-        $latestShipments = Shipment::latest()
-            ->limit(4)
-            ->get(['tracking_number', 'sender_name', 'receiver_name', 'status', 'updated_at']);
-
-        return view('welcome', compact('metrics', 'latestShipments'));
+        return view('welcome', compact('metrics'));
     }
 
     public function track(Request $request)
