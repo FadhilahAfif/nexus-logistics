@@ -133,6 +133,7 @@ class ShipmentResource extends Resource
                                     ->image()
                                     ->disk('s3')
                                     ->directory('pod-images')
+                                    ->visibility('public')
                                     ->columnSpanFull()
                                     ->nullable()
                                     ->visible(fn ($get) => $get('status') === 'delivered'),
