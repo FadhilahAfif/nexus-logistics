@@ -12,7 +12,6 @@ use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\ViewField;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -25,6 +24,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ShipmentResource extends Resource
@@ -115,6 +115,7 @@ class ShipmentResource extends Resource
                             ->relationship()
                             ->label('Update Status')
                             ->collapsible()
+                            ->reorderable(false)
                             ->schema([
                                 Select::make('status')
                                     ->label('Status')
@@ -129,11 +130,17 @@ class ShipmentResource extends Resource
                                     ->label('Catatan Kurir')
                                     ->rows(2)
                                     ->columnSpanFull(),
-                                ViewField::make('proof_of_delivery')
+                                FileUpload::make('proof_of_delivery')
                                     ->label('Bukti Foto (POD)')
-                                    ->view('filament.forms.components.base64-file-upload')
+                                    ->image()
+                                    ->maxSize(2048)
+                                    ->disk('s3')
+                                    ->directory('pod')
+                                    ->visibility('public')
                                     ->columnSpanFull()
-                                    ->visible(fn ($get) => $get('status') === 'delivered'),
+                                    ->visible(fn ($get) => $get('status') === 'delivered')
+                                    ->fetchFileInformation(false)
+                                    ->helperText('Upload foto bukti pengiriman (max 2MB)'),
                                 DateTimePicker::make('happened_at')
                                     ->label('Waktu Terjadi')
                                     ->seconds(false)

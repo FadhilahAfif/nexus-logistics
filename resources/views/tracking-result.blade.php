@@ -141,7 +141,7 @@
                                     @if($update->proof_of_delivery)
                                         <div class="mt-3">
                                             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Proof of Delivery</p>
-                                            <img src="{{ $update->proof_of_delivery }}" 
+                                            <img src="{{ $update->proof_of_delivery_url }}" 
                                                  alt="Proof of Delivery" 
                                                  class="w-32 h-32 object-cover rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm hover:scale-105 transition-transform cursor-pointer"
                                                  onclick="window.open(this.src, '_blank')">
