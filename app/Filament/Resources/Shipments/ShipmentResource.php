@@ -32,8 +32,8 @@ class ShipmentResource extends Resource
     protected static ?string $model = Shipment::class;
 
     public static function getNavigationIcon(): ?string { return 'heroicon-o-truck'; }
-    public static function getNavigationLabel(): string { return 'Kelola Paket'; }
-    public static function getNavigationGroup(): ?string { return 'Operasional'; }
+    public static function getNavigationLabel(): string { return __('admin.nav.shipments'); }
+    public static function getNavigationGroup(): ?string { return __('admin.nav.operational'); }
 
     public static function form(Schema $schema): Schema
     {
@@ -41,62 +41,62 @@ class ShipmentResource extends Resource
             ->components([
                 Group::make()
                     ->schema([
-                        Section::make('Informasi Resi')
-                            ->description('Nomor resi, status pengiriman, berat, dan ongkir.')
+                        Section::make(__('admin.shipment.info_section'))
+                            ->description(__('admin.shipment.info_description'))
                             ->schema([
                                 TextInput::make('tracking_number')
-                                    ->label('Nomor Resi')
+                                    ->label(__('admin.shipment.tracking_number'))
                                     ->default(fn (?Shipment $record): string => $record?->tracking_number ?? 'NXS-' . strtoupper(Str::random(8)))
                                     ->unique(table: 'shipments', ignoreRecord: true)
                                     ->maxLength(32)
                                     ->readOnlyOn('edit')
                                     ->required(),
                                 Select::make('status')
-                                    ->label('Status Paket')
+                                    ->label(__('admin.shipment.status'))
                                     ->options(Shipment::statusOptions())
                                     ->required()
                                     ->default('pending'),
                                 DatePicker::make('estimated_delivery')
-                                    ->label('Estimasi Tiba')
+                                    ->label(__('admin.shipment.estimated_delivery'))
                                     ->native(false)
                                     ->displayFormat('d M Y')
                                     ->nullable(),
                                 TextInput::make('weight_kg')
-                                    ->label('Berat (kg)')
+                                    ->label(__('admin.shipment.weight'))
                                     ->numeric()
                                     ->suffix('Kg')
                                     ->step(0.1)
                                     ->minValue(0.1)
                                     ->nullable(),
                                 TextInput::make('price')
-                                    ->label('Ongkir')
+                                    ->label(__('admin.shipment.price'))
                                     ->numeric()
                                     ->prefix('Rp')
                                     ->minValue(0)
                                     ->nullable(),
                             ])
                             ->columns(2),
-                        Section::make('Data Pengirim')
+                        Section::make(__('admin.shipment.sender_info'))
                             ->schema([
                                 TextInput::make('sender_name')
-                                    ->label('Nama Pengirim')
+                                    ->label(__('admin.shipment.sender_name'))
                                     ->required()
                                     ->maxLength(255),
                                 TextInput::make('sender_phone')
-                                    ->label('Telepon Pengirim')
+                                    ->label(__('admin.shipment.sender_phone'))
                                     ->tel()
                                     ->maxLength(30)
                                     ->required(),
                             ])
                             ->columns(2),
-                        Section::make('Data Penerima')
+                        Section::make(__('admin.shipment.receiver_info'))
                             ->schema([
                                 TextInput::make('receiver_name')
-                                    ->label('Nama Penerima')
+                                    ->label(__('admin.shipment.receiver_name'))
                                     ->required()
                                     ->maxLength(255),
                                 TextInput::make('receiver_phone')
-                                    ->label('Telepon Penerima')
+                                    ->label(__('admin.shipment.receiver_phone'))
                                     ->tel()
                                     ->maxLength(30)
                                     ->required(),

@@ -1,0 +1,48 @@
+<?php
+
+return [
+    'nav' => [
+        'dashboard' => 'Dasbor',
+        'shipments' => 'Kelola Paket',
+        'operational' => 'Operasional',
+    ],
+    'shipment' => [
+        'label' => 'Paket',
+        'plural_label' => 'Paket',
+        'tracking_number' => 'Nomor Resi',
+        'status' => 'Status Paket',
+        'estimated_delivery' => 'Estimasi Tiba',
+        'weight' => 'Berat (kg)',
+        'price' => 'Ongkir',
+        'sender_info' => 'Data Pengirim',
+        'sender_name' => 'Nama Pengirim',
+        'sender_phone' => 'Telepon Pengirim',
+        'receiver_info' => 'Data Penerima',
+        'receiver_name' => 'Nama Penerima',
+        'receiver_phone' => 'Telepon Penerima',
+        'origin' => 'Asal',
+        'destination' => 'Tujuan',
+        'info_section' => 'Informasi Resi',
+        'info_description' => 'Nomor resi, status pengiriman, berat, dan ongkir.',
+    ],
+    'widgets' => [
+        'total_shipments' => 'Total Pengiriman',
+        'all_packages' => 'Semua paket terdaftar',
+        'delivered' => 'Terkirim',
+        'delivered_desc' => ':rate% dari total',
+        'in_transit' => 'Sedang Jalan',
+        'in_transit_desc' => ':rate% masih di perjalanan',
+        'pending' => 'Menunggu Kurir',
+        'pending_desc' => 'Belum dijemput',
+        'trend_heading' => 'Trend Pengiriman 7 Hari',
+        'distribution_heading' => 'Distribusi Status Paket',
+        'recent_activity' => 'Aktivitas Terbaru',
+    ],
+    'table' => [
+        'tracking_number' => 'Resi',
+        'sender' => 'Pengirim',
+        'receiver' => 'Penerima',
+        'status' => 'Status',
+        'copied' => 'Nomor resi disalin',
+    ],
+];

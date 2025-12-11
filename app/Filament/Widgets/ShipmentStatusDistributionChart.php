@@ -7,7 +7,10 @@ use Filament\Widgets\ChartWidget;
 
 class ShipmentStatusDistributionChart extends ChartWidget
 {
-    protected ?string $heading = 'Distribusi Status Paket';
+    public function getHeading(): ?string
+    {
+        return __('admin.widgets.distribution_heading');
+    }
 
     protected static ?int $sort = 4;
 
