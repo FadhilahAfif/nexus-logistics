@@ -214,6 +214,13 @@ class ShipmentResource extends Resource
             ->recordActions([
                 ViewAction::make()->label('Detail'),
                 EditAction::make(),
+                \Filament\Actions\Action::make('printLabel')
+                    ->label('Print Label')
+                    ->icon('heroicon-o-printer')
+                    ->modalContent(fn (Shipment $record) => view('shipments.label-preview', ['record' => $record]))
+                    ->modalSubmitAction(false)
+                    ->modalCancelAction(false)
+                    ->modalWidth('5xl'),
                 DeleteAction::make(),
             ])
             ->bulkActions([
