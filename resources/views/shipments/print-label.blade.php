@@ -73,7 +73,7 @@
 
         <!-- Print Button -->
         <button onclick="window.print()" class="no-print fixed bottom-8 right-8 bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg font-bold hover:bg-blue-700 transition">
-            Print Label
+            {{ __('admin.shipment.print_label') }}
         </button>
     </div>
 </body>

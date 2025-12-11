@@ -18,6 +18,7 @@ return [
         'sender_name' => 'Nama Pengirim',
         'sender_phone' => 'Telepon Pengirim',
         'receiver_info' => 'Data Penerima',
+        'print_label' => 'Cetak Label',
         'receiver_name' => 'Nama Penerima',
         'receiver_phone' => 'Telepon Penerima',
         'origin' => 'Asal',

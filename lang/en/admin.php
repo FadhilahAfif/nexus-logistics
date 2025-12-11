@@ -18,6 +18,7 @@ return [
         'sender_name' => 'Sender Name',
         'sender_phone' => 'Sender Phone',
         'receiver_info' => 'Receiver Information',
+        'print_label' => 'Print Label',
         'receiver_name' => 'Receiver Name',
         'receiver_phone' => 'Receiver Phone',
         'origin' => 'Origin',

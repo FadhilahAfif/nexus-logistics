@@ -215,7 +215,7 @@ class ShipmentResource extends Resource
                 ViewAction::make()->label('Detail'),
                 EditAction::make(),
                 \Filament\Actions\Action::make('printLabel')
-                    ->label('Print Label')
+                    ->label(__('admin.shipment.print_label'))
                     ->icon('heroicon-o-printer')
                     ->modalContent(fn (Shipment $record) => view('shipments.label-preview', ['record' => $record]))
                     ->modalSubmitAction(false)
