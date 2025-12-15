@@ -40,14 +40,18 @@
                     <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
                 </button>
 
-                <div class="flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-slate-400 border-l border-slate-700 pl-4">
-                    <span>{{ __('tracking.lang_switch') }}</span>
+                <div class="flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-slate-500 bg-white/5 border border-white/10 rounded-full px-4 py-2 ml-4">
+                    <span>{{ __('home.lang_switch.label') }}</span>
                     <div class="flex gap-2 font-semibold tracking-normal">
                         <a href="{{ request()->fullUrlWithQuery(['lang' => 'id']) }}"
-                           class="{{ app()->getLocale() === 'id' ? 'text-white' : 'text-slate-500 hover:text-white' }}">ID</a>
+                           class="{{ app()->getLocale() === 'id' ? 'text-white' : 'text-slate-400 hover:text-white' }}">
+                            {{ __('home.lang_switch.id') }}
+                        </a>
                         <span class="opacity-40">/</span>
                         <a href="{{ request()->fullUrlWithQuery(['lang' => 'en']) }}"
-                           class="{{ app()->getLocale() === 'en' ? 'text-white' : 'text-slate-500 hover:text-white' }}">EN</a>
+                           class="{{ app()->getLocale() === 'en' ? 'text-white' : 'text-slate-400 hover:text-white' }}">
+                            {{ __('home.lang_switch.en') }}
+                        </a>
                     </div>
                 </div>
             </div>
