@@ -25,6 +25,7 @@ use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class ShipmentResource extends Resource
@@ -122,10 +123,30 @@ class ShipmentResource extends Resource
                                     ->options(Shipment::statusOptions())
                                     ->required()
                                     ->live(),
-                                TextInput::make('location')
+                                Select::make('location')
                                     ->label('Lokasi')
-                                    ->required()
-                                    ->maxLength(255),
+                                    ->searchable()
+                                    ->getSearchResultsUsing(function (string $search): array {
+                                        if (! $search) {
+                                            return [];
+                                        }
+
+                                        $response = Http::withHeaders([
+                                            'User-Agent' => 'NexusLogistics/1.0',
+                                        ])->get('https://nominatim.openstreetmap.org/search', [
+                                            'q' => $search,
+                                            'format' => 'json',
+                                            'limit' => 10,
+                                            'addressdetails' => 1,
+                                        ]);
+
+                                        return collect($response->json())
+                                            ->mapWithKeys(function ($result) {
+                                                return [$result['display_name'] => $result['display_name']];
+                                            })
+                                            ->toArray();
+                                    })
+                                    ->required(),
                                 Textarea::make('description')
                                     ->label('Catatan Kurir')
                                     ->rows(2)
