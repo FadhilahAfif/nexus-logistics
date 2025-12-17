@@ -88,16 +88,6 @@
                 <div class="mt-6 text-xs text-slate-500">
                     {{ __('home.hero.form_consent') }}
                 </div>
-
-                <div class="mt-8">
-                    <p class="text-slate-400 text-sm mb-3">{{ __('home.hero.internal_access') }}</p>
-                    <a href="/admin" class="inline-flex items-center gap-2 text-blue-300 hover:text-white transition font-semibold">
-                        {{ __('home.hero.admin_login') }}
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.5 4.5L21 12l-7.5 7.5M21 12H3"/>
-                        </svg>
-                    </a>
-                </div>
             </div>
         </header>
 

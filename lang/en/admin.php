@@ -5,6 +5,7 @@ return [
         'dashboard' => 'Dashboard',
         'shipments' => 'Manage Shipments',
         'operational' => 'Operational',
+        'back_to_website' => 'Back to Website',
     ],
     'shipment' => [
         'label' => 'Shipment',

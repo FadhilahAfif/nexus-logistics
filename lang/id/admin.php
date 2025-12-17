@@ -5,6 +5,7 @@ return [
         'dashboard' => 'Dasbor',
         'shipments' => 'Kelola Paket',
         'operational' => 'Operasional',
+        'back_to_website' => 'Kembali ke Website',
     ],
     'shipment' => [
         'label' => 'Paket',
