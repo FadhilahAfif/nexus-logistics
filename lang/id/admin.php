@@ -53,6 +53,9 @@ return [
         'sender' => 'Pengirim',
         'receiver' => 'Penerima',
         'status' => 'Status',
+        'total_price' => 'Ongkir',
+        'weight' => 'Berat',
+        'created_at' => 'Dibuat',
         'copied' => 'Nomor resi disalin',
     ],
 ];

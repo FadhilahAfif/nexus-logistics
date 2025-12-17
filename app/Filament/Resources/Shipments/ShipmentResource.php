@@ -160,22 +160,22 @@ class ShipmentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('tracking_number')
-                    ->label('Resi')
+                    ->label(__('admin.table.tracking_number'))
                     ->weight('bold')
                     ->copyable()
-                    ->copyMessage('Nomor resi tersalin')
+                    ->copyMessage(__('admin.table.copied'))
                     ->copyMessageDuration(1500)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('sender_name')
-                    ->label('Pengirim')
+                    ->label(__('admin.table.sender'))
                     ->searchable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('receiver_name')
-                    ->label('Penerima')
+                    ->label(__('admin.table.receiver'))
                     ->searchable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('status')
-                    ->label('Status')
+                    ->label(__('admin.table.status'))
                     ->badge()
                     ->color(fn (Shipment $record): string => match ($record->status) {
                         'pending' => 'gray',
@@ -188,21 +188,21 @@ class ShipmentResource extends Resource
                     ->formatStateUsing(fn (Shipment $record): string => $record->status_label)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('price')
-                    ->label('Ongkir')
+                    ->label(__('admin.table.total_price'))
                     ->sortable()
                     ->toggleable()
                     ->formatStateUsing(fn (?string $state): string => filled($state)
                         ? 'Rp ' . number_format((float) $state, 0, ',', '.')
                         : '-'),
                 Tables\Columns\TextColumn::make('weight_kg')
-                    ->label('Berat')
+                    ->label(__('admin.table.weight'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->formatStateUsing(fn (?string $state): string => filled($state)
                         ? rtrim(rtrim(number_format((float) $state, 2, ',', '.'), '0'), ',') . ' kg'
                         : '-'),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Dibuat')
+                    ->label(__('admin.table.created_at'))
                     ->dateTime('d M Y H:i')
                     ->sortable(),
             ])

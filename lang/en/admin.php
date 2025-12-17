@@ -53,6 +53,9 @@ return [
         'sender' => 'Sender',
         'receiver' => 'Receiver',
         'status' => 'Status',
+        'total_price' => 'Shipping Cost',
+        'weight' => 'Weight',
+        'created_at' => 'Created At',
         'copied' => 'Tracking number copied',
     ],
 ];
