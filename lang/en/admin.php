@@ -25,6 +25,15 @@ return [
         'destination' => 'Destination',
         'info_section' => 'Shipment Information',
         'info_description' => 'Tracking number, status, weight, and shipping cost.',
+        'updates' => [
+            'title' => 'Courier Tracking History',
+            'label' => 'Status Update',
+            'location' => 'Location',
+            'description' => 'Courier Notes',
+            'proof_of_delivery' => 'Proof of Delivery (POD)',
+            'pod_helper' => 'Upload delivery proof photo (max 2MB)',
+            'happened_at' => 'Time of Event',
+        ],
     ],
     'widgets' => [
         'total_shipments' => 'Total Shipments',

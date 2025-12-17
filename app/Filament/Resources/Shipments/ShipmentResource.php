@@ -110,49 +110,31 @@ class ShipmentResource extends Resource
                             ->columns(2),
                     ])
                     ->columnSpanFull(),
-                Section::make('Riwayat Tracking Kurir')
+                Section::make(__('admin.shipment.updates.title'))
                     ->schema([
                         Repeater::make('updates')
                             ->relationship()
-                            ->label('Update Status')
+                            ->label(__('admin.shipment.updates.label'))
                             ->collapsible()
                             ->reorderable(false)
+                            ->itemLabel(fn (array $state): ?string => isset($state['status']) ? (Shipment::statusOptions()[$state['status']] ?? $state['status']) : null)
                             ->schema([
                                 Select::make('status')
-                                    ->label('Status')
+                                    ->label(__('admin.shipment.status'))
                                     ->options(Shipment::statusOptions())
                                     ->required()
                                     ->live(),
-                                Select::make('location')
-                                    ->label('Lokasi')
-                                    ->searchable()
-                                    ->getSearchResultsUsing(function (string $search): array {
-                                        if (! $search) {
-                                            return [];
-                                        }
-
-                                        $response = Http::withHeaders([
-                                            'User-Agent' => 'NexusLogistics/1.0',
-                                        ])->get('https://nominatim.openstreetmap.org/search', [
-                                            'q' => $search,
-                                            'format' => 'json',
-                                            'limit' => 10,
-                                            'addressdetails' => 1,
-                                        ]);
-
-                                        return collect($response->json())
-                                            ->mapWithKeys(function ($result) {
-                                                return [$result['display_name'] => $result['display_name']];
-                                            })
-                                            ->toArray();
-                                    })
-                                    ->required(),
+                                TextInput::make('location')
+                                    ->label(__('admin.shipment.updates.location'))
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->placeholder('Jakarta, Indonesia'),
                                 Textarea::make('description')
-                                    ->label('Catatan Kurir')
+                                    ->label(__('admin.shipment.updates.description'))
                                     ->rows(2)
                                     ->columnSpanFull(),
                                 FileUpload::make('proof_of_delivery')
-                                    ->label('Bukti Foto (POD)')
+                                    ->label(__('admin.shipment.updates.proof_of_delivery'))
                                     ->image()
                                     ->maxSize(2048)
                                     ->disk('s3')
@@ -161,9 +143,9 @@ class ShipmentResource extends Resource
                                     ->columnSpanFull()
                                     ->visible(fn ($get) => $get('status') === 'delivered')
                                     ->fetchFileInformation(false)
-                                    ->helperText('Upload foto bukti pengiriman (max 2MB)'),
+                                    ->helperText(__('admin.shipment.updates.pod_helper')),
                                 DateTimePicker::make('happened_at')
-                                    ->label('Waktu Terjadi')
+                                    ->label(__('admin.shipment.updates.happened_at'))
                                     ->seconds(false)
                                     ->required()
                                     ->default(now()),

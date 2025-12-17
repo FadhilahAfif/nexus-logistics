@@ -25,6 +25,15 @@ return [
         'destination' => 'Tujuan',
         'info_section' => 'Informasi Resi',
         'info_description' => 'Nomor resi, status pengiriman, berat, dan ongkir.',
+        'updates' => [
+            'title' => 'Riwayat Tracking Kurir',
+            'label' => 'Update Status',
+            'location' => 'Lokasi',
+            'description' => 'Catatan Kurir',
+            'proof_of_delivery' => 'Bukti Foto (POD)',
+            'pod_helper' => 'Upload foto bukti pengiriman (max 2MB)',
+            'happened_at' => 'Waktu Terjadi',
+        ],
     ],
     'widgets' => [
         'total_shipments' => 'Total Pengiriman',
