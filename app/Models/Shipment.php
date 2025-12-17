@@ -40,6 +40,7 @@ class Shipment extends Model
         'estimated_delivery',
         'weight_kg',
         'price',
+        'proof_of_delivery',
     ];
 
     protected $casts = [

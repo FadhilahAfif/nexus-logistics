@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 class StatusUpdate extends Model
 {
@@ -29,6 +30,15 @@ class StatusUpdate extends Model
     {
         return Attribute::get(
             fn (): string => trans('statuses.' . ($this->status ?? 'pending')),
+        );
+    }
+
+    protected function proofOfDeliveryUrl(): Attribute
+    {
+        return Attribute::get(
+            fn (): ?string => $this->proof_of_delivery 
+                ? Storage::disk('s3')->url($this->proof_of_delivery) 
+                : null,
         );
     }
 

@@ -14,7 +14,10 @@ class ShipmentStatusChart extends ChartWidget
 
     protected int | string | array $columnSpan = 1;
 
-    protected ?string $heading = 'Trend Pengiriman 7 Hari';
+    public function getHeading(): ?string
+    {
+        return __('admin.widgets.trend_heading');
+    }
 
     protected ?string $pollingInterval = '60s';
 

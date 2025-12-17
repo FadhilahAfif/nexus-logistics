@@ -26,23 +26,23 @@ class ShipmentStatsOverview extends StatsOverviewWidget
         $inTransitRate = $total > 0 ? round(($inTransit / $total) * 100) : 0;
 
         return [
-            Stat::make('Total Pengiriman', number_format($total))
-                ->description('Semua paket terdaftar')
+            Stat::make(__('admin.widgets.total_shipments'), number_format($total))
+                ->description(__('admin.widgets.all_packages'))
                 ->descriptionIcon('heroicon-m-truck', IconPosition::Before)
                 ->chart($this->sparkline('total'))
                 ->color('primary'),
-            Stat::make('Terkirim', number_format($delivered))
-                ->description("{$deliveredRate}% dari total")
+            Stat::make(__('admin.widgets.delivered'), number_format($delivered))
+                ->description(__('admin.widgets.delivered_desc', ['rate' => $deliveredRate]))
                 ->descriptionIcon('heroicon-m-check-badge', IconPosition::Before)
                 ->chart($this->sparkline('delivered'))
                 ->color('success'),
-            Stat::make('Sedang Jalan', number_format($inTransit))
-                ->description("{$inTransitRate}% masih di perjalanan")
+            Stat::make(__('admin.widgets.in_transit'), number_format($inTransit))
+                ->description(__('admin.widgets.in_transit_desc', ['rate' => $inTransitRate]))
                 ->descriptionIcon('heroicon-m-paper-airplane', IconPosition::Before)
                 ->chart($this->sparkline('in_transit'))
                 ->color('warning'),
-            Stat::make('Menunggu Kurir', number_format($pending))
-                ->description('Belum dijemput')
+            Stat::make(__('admin.widgets.pending'), number_format($pending))
+                ->description(__('admin.widgets.pending_desc'))
                 ->descriptionIcon('heroicon-m-clock', IconPosition::Before)
                 ->chart($this->sparkline('pending'))
                 ->color('gray'),

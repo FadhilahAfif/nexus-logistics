@@ -12,7 +12,6 @@ use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\ViewField;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -25,6 +24,8 @@ use Filament\Schemas\Components\Section;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class ShipmentResource extends Resource
@@ -32,8 +33,8 @@ class ShipmentResource extends Resource
     protected static ?string $model = Shipment::class;
 
     public static function getNavigationIcon(): ?string { return 'heroicon-o-truck'; }
-    public static function getNavigationLabel(): string { return 'Kelola Paket'; }
-    public static function getNavigationGroup(): ?string { return 'Operasional'; }
+    public static function getNavigationLabel(): string { return __('admin.nav.shipments'); }
+    public static function getNavigationGroup(): ?string { return __('admin.nav.operational'); }
 
     public static function form(Schema $schema): Schema
     {
@@ -41,62 +42,62 @@ class ShipmentResource extends Resource
             ->components([
                 Group::make()
                     ->schema([
-                        Section::make('Informasi Resi')
-                            ->description('Nomor resi, status pengiriman, berat, dan ongkir.')
+                        Section::make(__('admin.shipment.info_section'))
+                            ->description(__('admin.shipment.info_description'))
                             ->schema([
                                 TextInput::make('tracking_number')
-                                    ->label('Nomor Resi')
+                                    ->label(__('admin.shipment.tracking_number'))
                                     ->default(fn (?Shipment $record): string => $record?->tracking_number ?? 'NXS-' . strtoupper(Str::random(8)))
                                     ->unique(table: 'shipments', ignoreRecord: true)
                                     ->maxLength(32)
                                     ->readOnlyOn('edit')
                                     ->required(),
                                 Select::make('status')
-                                    ->label('Status Paket')
+                                    ->label(__('admin.shipment.status'))
                                     ->options(Shipment::statusOptions())
                                     ->required()
                                     ->default('pending'),
                                 DatePicker::make('estimated_delivery')
-                                    ->label('Estimasi Tiba')
+                                    ->label(__('admin.shipment.estimated_delivery'))
                                     ->native(false)
                                     ->displayFormat('d M Y')
                                     ->nullable(),
                                 TextInput::make('weight_kg')
-                                    ->label('Berat (kg)')
+                                    ->label(__('admin.shipment.weight'))
                                     ->numeric()
                                     ->suffix('Kg')
                                     ->step(0.1)
                                     ->minValue(0.1)
                                     ->nullable(),
                                 TextInput::make('price')
-                                    ->label('Ongkir')
+                                    ->label(__('admin.shipment.price'))
                                     ->numeric()
                                     ->prefix('Rp')
                                     ->minValue(0)
                                     ->nullable(),
                             ])
                             ->columns(2),
-                        Section::make('Data Pengirim')
+                        Section::make(__('admin.shipment.sender_info'))
                             ->schema([
                                 TextInput::make('sender_name')
-                                    ->label('Nama Pengirim')
+                                    ->label(__('admin.shipment.sender_name'))
                                     ->required()
                                     ->maxLength(255),
                                 TextInput::make('sender_phone')
-                                    ->label('Telepon Pengirim')
+                                    ->label(__('admin.shipment.sender_phone'))
                                     ->tel()
                                     ->maxLength(30)
                                     ->required(),
                             ])
                             ->columns(2),
-                        Section::make('Data Penerima')
+                        Section::make(__('admin.shipment.receiver_info'))
                             ->schema([
                                 TextInput::make('receiver_name')
-                                    ->label('Nama Penerima')
+                                    ->label(__('admin.shipment.receiver_name'))
                                     ->required()
                                     ->maxLength(255),
                                 TextInput::make('receiver_phone')
-                                    ->label('Telepon Penerima')
+                                    ->label(__('admin.shipment.receiver_phone'))
                                     ->tel()
                                     ->maxLength(30)
                                     ->required(),
@@ -115,25 +116,52 @@ class ShipmentResource extends Resource
                             ->relationship()
                             ->label('Update Status')
                             ->collapsible()
+                            ->reorderable(false)
                             ->schema([
                                 Select::make('status')
                                     ->label('Status')
                                     ->options(Shipment::statusOptions())
                                     ->required()
                                     ->live(),
-                                TextInput::make('location')
+                                Select::make('location')
                                     ->label('Lokasi')
-                                    ->required()
-                                    ->maxLength(255),
+                                    ->searchable()
+                                    ->getSearchResultsUsing(function (string $search): array {
+                                        if (! $search) {
+                                            return [];
+                                        }
+
+                                        $response = Http::withHeaders([
+                                            'User-Agent' => 'NexusLogistics/1.0',
+                                        ])->get('https://nominatim.openstreetmap.org/search', [
+                                            'q' => $search,
+                                            'format' => 'json',
+                                            'limit' => 10,
+                                            'addressdetails' => 1,
+                                        ]);
+
+                                        return collect($response->json())
+                                            ->mapWithKeys(function ($result) {
+                                                return [$result['display_name'] => $result['display_name']];
+                                            })
+                                            ->toArray();
+                                    })
+                                    ->required(),
                                 Textarea::make('description')
                                     ->label('Catatan Kurir')
                                     ->rows(2)
                                     ->columnSpanFull(),
-                                ViewField::make('proof_of_delivery')
+                                FileUpload::make('proof_of_delivery')
                                     ->label('Bukti Foto (POD)')
-                                    ->view('filament.forms.components.base64-file-upload')
+                                    ->image()
+                                    ->maxSize(2048)
+                                    ->disk('s3')
+                                    ->directory('pod')
+                                    ->visibility('public')
                                     ->columnSpanFull()
-                                    ->visible(fn ($get) => $get('status') === 'delivered'),
+                                    ->visible(fn ($get) => $get('status') === 'delivered')
+                                    ->fetchFileInformation(false)
+                                    ->helperText('Upload foto bukti pengiriman (max 2MB)'),
                                 DateTimePicker::make('happened_at')
                                     ->label('Waktu Terjadi')
                                     ->seconds(false)
@@ -207,6 +235,13 @@ class ShipmentResource extends Resource
             ->recordActions([
                 ViewAction::make()->label('Detail'),
                 EditAction::make(),
+                \Filament\Actions\Action::make('printLabel')
+                    ->label(__('admin.shipment.print_label'))
+                    ->icon('heroicon-o-printer')
+                    ->modalContent(fn (Shipment $record) => view('shipments.label-preview', ['record' => $record]))
+                    ->modalSubmitAction(false)
+                    ->modalCancelAction(false)
+                    ->modalWidth('5xl'),
                 DeleteAction::make(),
             ])
             ->bulkActions([

@@ -15,7 +15,10 @@ class RecentShipments extends BaseWidget
 
     protected static bool $isLazy = true;
 
-    protected static ?string $heading = 'Aktivitas Terbaru';
+    protected function getHeading(): ?string
+    {
+        return __('admin.widgets.recent_activity');
+    }
 
     protected ?string $pollingInterval = '30s';
 
@@ -30,18 +33,18 @@ class RecentShipments extends BaseWidget
     {
         return [
             Tables\Columns\TextColumn::make('tracking_number')
-                ->label('Resi')
+                ->label(__('admin.table.tracking_number'))
                 ->weight('bold')
                 ->copyable()
-                ->copyMessage('Nomor resi disalin'),
+                ->copyMessage(__('admin.table.copied')),
             Tables\Columns\TextColumn::make('sender_name')
-                ->label('Pengirim')
+                ->label(__('admin.table.sender'))
                 ->wrap(),
             Tables\Columns\TextColumn::make('receiver_name')
-                ->label('Penerima')
+                ->label(__('admin.table.receiver'))
                 ->wrap(),
             Tables\Columns\TextColumn::make('status')
-                ->label('Status')
+                ->label(__('admin.table.status'))
                 ->formatStateUsing(fn (Shipment $record): string => $record->status_label)
                 ->badge()
                 ->color(fn (Shipment $record): string => match ($record->status) {

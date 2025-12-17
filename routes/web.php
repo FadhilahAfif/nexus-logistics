@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TrackingController;
+use App\Models\Shipment;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan; // Tambahan untuk migrasi
 
@@ -11,6 +12,10 @@ Route::get('/', [TrackingController::class, 'index'])->name('home');
 Route::get('/track', [TrackingController::class, 'track'])
     ->middleware('throttle:10,1') 
     ->name('track');
+
+Route::get('/shipments/{shipment}/label', function (Shipment $shipment) {
+    return view('shipments.print-label', ['shipment' => $shipment]);
+})->name('shipments.print-label');
 
 // --- ROUTE KHUSUS MIGRASI (HANYA SEMENTARA) ---
 Route::get('/setup-database', function () {
