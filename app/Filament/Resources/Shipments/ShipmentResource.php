@@ -151,7 +151,8 @@ class ShipmentResource extends Resource
                                     ->default(now()),
                             ])
                             ->columns(2),
-                    ]),
+                    ])
+                    ->columnSpanFull(), 
             ]);
     }
 
