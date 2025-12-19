@@ -74,6 +74,12 @@
                     </div>
                 @endif
 
+                @error('tracking_number')
+                    <div class="mb-4 p-4 bg-red-500/15 border border-red-500/40 rounded-2xl text-red-200 text-sm">
+                        {{ $message }}
+                    </div>
+                @enderror
+
                 <form action="{{ route('track') }}" method="GET" class="space-y-4">
                     <label class="text-xs uppercase tracking-[0.3em] text-slate-400">{{ __('home.hero.form_label') }}</label>
                     <div class="flex gap-2 bg-white/5 border border-white/10 rounded-2xl p-2 focus-within:border-blue-400/70 transition">

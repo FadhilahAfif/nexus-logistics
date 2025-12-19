@@ -13,5 +13,10 @@ return [
     'order_created' => 'Order Created',
     'order_created_desc' => 'Waiting for the parcel to be handed to the courier.',
     'lang_switch' => 'Language',
+    'validation' => [
+        'required' => 'Tracking number is required!',
+        'format' => 'Invalid tracking number format (letters and numbers only).',
+        'not_found' => "Tracking number ':resi' not found in our database.",
+    ],
 ];
 

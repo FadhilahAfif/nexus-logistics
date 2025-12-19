@@ -25,8 +25,8 @@ class TrackingController extends Controller
         $request->validate([
             'tracking_number' => 'required|string|max:50|alpha_dash', // Hanya huruf, angka, dash
         ], [
-            'tracking_number.required' => 'Nomor resi wajib diisi!',
-            'tracking_number.alpha_dash' => 'Format resi tidak valid (hanya huruf & angka).',
+            'tracking_number.required' => __('tracking.validation.required'),
+            'tracking_number.alpha_dash' => __('tracking.validation.format'),
         ]);
 
         $resi = trim($request->tracking_number);
@@ -38,7 +38,7 @@ class TrackingController extends Controller
 
         // 3. Jika Tidak Ketemu -> Balikin user dengan pesan error
         if (!$shipment) {
-            return back()->with('error', "Nomor Resi '$resi' tidak ditemukan di database kami.");
+            return back()->with('error', __('tracking.validation.not_found', ['resi' => $resi]));
         }
 
         // 4. Jika Ketemu -> Tampilkan Halaman Hasil
