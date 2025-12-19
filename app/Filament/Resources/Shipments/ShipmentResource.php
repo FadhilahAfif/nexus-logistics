@@ -52,11 +52,6 @@ class ShipmentResource extends Resource
                                     ->maxLength(32)
                                     ->readOnlyOn('edit')
                                     ->required(),
-                                Select::make('status')
-                                    ->label(__('admin.shipment.status'))
-                                    ->options(Shipment::statusOptions())
-                                    ->required()
-                                    ->default('pending'),
                                 DatePicker::make('estimated_delivery')
                                     ->label(__('admin.shipment.estimated_delivery'))
                                     ->native(false)

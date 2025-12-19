@@ -34,6 +34,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             // --- BAGIAN BRANDING (KITA UBAH DISINI) ---
             ->brandName('Nexus Logistics') // Ganti tulisan Laravel jadi Nexus
+            ->brandLogo(fn () => view('filament.logo'))
             ->colors([
                 'primary' => Color::Indigo, // Ganti warna oranye jadi Indigo (Biru Ungu)
             ])

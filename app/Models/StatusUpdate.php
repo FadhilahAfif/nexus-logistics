@@ -12,6 +12,29 @@ class StatusUpdate extends Model
 {
     use HasFactory;
 
+    protected static function booted(): void
+    {
+        $updateShipmentStatus = function (StatusUpdate $statusUpdate) {
+            if (! $statusUpdate->relationLoaded('shipment')) {
+                $statusUpdate->load('shipment');
+            }
+
+            $shipment = $statusUpdate->shipment;
+            if (! $shipment) {
+                return;
+            }
+
+            $latestUpdate = $shipment->updates()->orderBy('happened_at', 'desc')->orderBy('id', 'desc')->first();
+
+            $shipment->update([
+                'status' => $latestUpdate?->status ?? 'pending',
+            ]);
+        };
+
+        static::saved($updateShipmentStatus);
+        static::deleted($updateShipmentStatus);
+    }
+
     protected $fillable = [
         'shipment_id',
         'location',
